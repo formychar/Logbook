@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Logbook</string>
+    <string name="date">Date</string>
+    <string name="block_end">Block End</string>
+    <string name="aircraft_type">Aircraft Type</string>
+    <string name="submit">Submit</string>
+    <string name="title_activity_view_logbook">ViewLogbook</string>
+</resources>

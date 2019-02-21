@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#e6f9ff"
+    tools:context=".MainPage">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="0dp">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:text="@string/date" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/date"
+                android:layout_width="233dp"
+                android:layout_height="wrap_content"
+                android:autofillHints=""
+                android:ems="10"
+                android:hint="MM/DD/YYYY"
+                android:inputType="date"
+                android:maxLength="10" />
+
+            <Button
+                android:id="@+id/dateFill"
+                android:layout_width="134dp"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:text="Auto-fill"
+                android:textColor="#008080"
+                android:textSize="40px" />
+        </LinearLayout>
+
+        <TextView
+            android:textColor="#000000"
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/aircraft_type" />
+
+        <EditText
+            android:id="@+id/acType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:maxLength="20"
+            android:inputType="textCapCharacters" />
+
+        <TextView
+            android:textColor="#000000"
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Registration" />
+
+        <EditText
+            android:id="@+id/registration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:maxLength="20"
+            android:inputType="textCapCharacters" />
+
+        <TextView
+            android:textColor="#000000"
+            android:id="@+id/textView4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Callsign" />
+
+        <EditText
+            android:id="@+id/callsign"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:maxLength="20"
+            android:inputType="textCapCharacters" />
+
+        <TextView
+            android:textColor="#000000"
+            android:id="@+id/textView5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Block Start" />
+
+        <EditText
+            android:id="@+id/blockStart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:maxLength="5"
+            android:inputType="time" />
+
+        <TextView
+            android:textColor="#000000"
+            android:id="@+id/textView6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/block_end" />
+
+        <EditText
+            android:id="@+id/blockEnd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:maxLength="5"
+            android:inputType="time" />
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radioButton4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:checked="true"
+                    android:text="Clock" />
+
+                <RadioButton
+                    android:id="@+id/radioButton3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:checked="false"
+                    android:text="Number" />
+            </LinearLayout>
+
+        </RadioGroup>
+
+        <Button
+            android:background="#008080"
+            android:id="@+id/submit"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:textSize="40px"
+            android:textColor="#ffffff"
+            android:text="@string/submit" />
+
+        <Button
+            android:layout_marginVertical="10dp"
+            android:background="#008080"
+            android:id="@+id/viewData"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:textSize="40px"
+            android:textColor="#ffffff"
+            android:text="View LogBook" />
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
