@@ -332,7 +332,7 @@ public class MainPage extends AppCompatActivity {
                 writeToFile(stringArray);
                 writeToDB(stringArray);
                  context = getApplicationContext();
-                Toast.makeText(context, "Entry Added",Toast.LENGTH_LONG).show();
+                //Toast.makeText(context, "Entry Added",Toast.LENGTH_LONG).show();
 
             }
 
