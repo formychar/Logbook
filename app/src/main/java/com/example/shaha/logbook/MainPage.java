@@ -1,10 +1,14 @@
 package com.example.shaha.logbook;
 
+import android.Manifest;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Environment;
@@ -40,6 +44,8 @@ public class MainPage extends AppCompatActivity {
     Context context;
     Database DB;
     Button viewButton;
+    static final Integer WRITE_STORAGE_PERMISSION_REQUEST_CODE = 0x2;
+    static final Integer READ_STORAGE_PERMISSION_REQUEST_CODE = 0x3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +54,7 @@ public class MainPage extends AppCompatActivity {
         //root = new File(Environment.getExternalStorageDirectory().toString());
         context = getApplicationContext();
         DB = new Database(this);
+        this.checkForPermissions();
         this.blockTextEditor();
         this.dateTextEditor();
         this.initButton();
@@ -56,6 +63,26 @@ public class MainPage extends AppCompatActivity {
         DB.removeTEST(); // remove test files
         //TESTSyncData();
 
+    }
+
+    protected void checkForPermissions(){
+
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    WRITE_STORAGE_PERMISSION_REQUEST_CODE);
+
+        }
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                    READ_STORAGE_PERMISSION_REQUEST_CODE);
+
+        }
     }
 
     protected void viewButtonPressed(){
@@ -129,6 +156,7 @@ public class MainPage extends AppCompatActivity {
                 currentDate = currentDate.replace('-', '/');
                 dateField = (EditText) findViewById(R.id.date);
                 dateField.setText(currentDate);
+                dateField.setTextColor(Color.BLACK);
             }
         });
 
@@ -283,6 +311,94 @@ public class MainPage extends AppCompatActivity {
 
 
     }
+
+    // checks to see if AC Type field is empty
+    protected boolean validateType(){
+        acType = (EditText) findViewById(R.id.acType);
+        String value;
+
+        value = acType.getText()+"";
+        value = value.replaceAll("\\s+","");
+
+        if(value.equals("")){
+            acType.setHint("Type can't be empty");
+            acType.setHintTextColor(Color.RED);
+            return false;
+        }else{
+            acType.setHint("");
+            return true;
+        }
+    }
+    // checks to see if Registration field is empty
+    protected boolean validateReg(){
+        reg = (EditText) findViewById(R.id.registration);
+        String value;
+
+        value = reg.getText()+"";
+        value = value.replaceAll("\\s+","");
+
+        if(value.equals("")){
+            reg.setHint("Registration can't be empty");
+            reg.setHintTextColor(Color.RED);
+            return false;
+        }else{
+            reg.setHint("");
+            return true;
+        }
+    }
+
+    // checks to see if callsign field is empty
+    protected boolean validateCallsign(){
+        callsign = (EditText) findViewById(R.id.callsign);
+        String value;
+
+        value = callsign.getText()+"";
+        value = value.replaceAll("\\s+","");
+
+        if(value.equals("")){
+            callsign.setHint("Callsign can't be empty");
+            callsign.setHintTextColor(Color.RED);
+            return false;
+        }else{
+            callsign.setHint("");
+            return true;
+        }
+    }
+    // checks to see if callsign field is empty
+    protected boolean validateStartTime(){
+        blockStart = (EditText) findViewById(R.id.blockStart);
+        String value;
+
+        value = blockStart.getText()+"";
+        value = value.replaceAll("\\s+","");
+
+        if(value.equals("")){
+            blockStart.setHint("Start Time can't be empty");
+            blockStart.setHintTextColor(Color.RED);
+            return false;
+        }else{
+            blockStart.setHint("");
+            return true;
+        }
+    }
+
+    // checks to see if callsign field is empty
+    protected boolean validateEndTime(){
+        blockEnd = (EditText) findViewById(R.id.blockEnd);
+        String value;
+
+        value = blockEnd.getText()+"";
+        value = value.replaceAll("\\s+","");
+
+        if(value.equals("")){
+            blockEnd.setHint("End Time can't be empty");
+            blockEnd.setHintTextColor(Color.RED);
+            return false;
+        }else{
+            blockEnd.setHint("");
+            return true;
+        }
+    }
     protected void initButton(){
         submit = (Button) findViewById(R.id.submit);
         submit.setOnClickListener(new View.OnClickListener() {
@@ -301,22 +417,40 @@ public class MainPage extends AppCompatActivity {
 
                 // add ac Type
                 temp = getacType();
-                stringArray[1] = temp;
+                if(validateType())
+                    stringArray[1] = temp;
+                else
+                    return;
                 temp = ""; // reset Temp
 
                 // add registration
                 temp = getReg();
-                stringArray[2] = temp;
+                if(validateReg())
+                    stringArray[2] = temp;
+                else{
+                    return;
+                }
                 temp = ""; // reset Temp
 
-                // add rcallsign
+                // add callsign
                 temp = getCallsign();
-                stringArray[3] = temp;
+                if(validateCallsign())
+                    stringArray[3] = temp;
+                else
+                    return;
                 temp = ""; // reset Temp
 
                 // add Flight Time
-                temp += getBlockTime();
-                stringArray[4] = temp;
+                if(validateStartTime()){
+                    if(validateEndTime()){
+                        temp += getBlockTime();
+                        stringArray[4] = temp;
+                    }else{ // end time is not valid
+                        return;
+                    }
+                }else{ // start time not valid
+                    return;
+                }
                 temp = ""; // reset Temp
 
                 // add Block Start
