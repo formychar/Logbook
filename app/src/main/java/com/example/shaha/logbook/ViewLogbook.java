@@ -24,6 +24,9 @@ import static android.graphics.Color.parseColor;
 public class ViewLogbook extends AppCompatActivity {
     Database DB;
     TableLayout tbLayout;
+    TableLayout Header;
+    TextView totalTime;
+
     TextView TV;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,9 +34,15 @@ public class ViewLogbook extends AppCompatActivity {
         DB = new Database(this);
         setContentView(R.layout.activity_view_logbook);
 
-
-
+        getTotalTime();
         populateTable();
+    }
+
+    // fills the total time
+    protected void getTotalTime(){
+        double tt = DB.getTotalTime();
+        totalTime = (TextView) findViewById(R.id.totalTime);
+        totalTime.setText(tt+"");
     }
 
     protected void populateTable(){
@@ -68,6 +77,7 @@ public class ViewLogbook extends AppCompatActivity {
     }
 
     protected  void addHeader(){
+
         tbLayout = (TableLayout) findViewById(R.id.ViewTable);
         TableRow header = new TableRow(this);
         TableLayout.LayoutParams trParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,
@@ -103,11 +113,11 @@ public class ViewLogbook extends AppCompatActivity {
         callsign.setTextColor(Color.WHITE);
         flightTime.setTextColor(Color.WHITE);
 
-        date.setGravity(Gravity.LEFT);
-        type.setGravity(Gravity.LEFT);
-        registration.setGravity(Gravity.LEFT);
-        callsign.setGravity(Gravity.LEFT);
-        flightTime.setGravity(Gravity.LEFT);
+        date.setGravity(Gravity.CENTER);
+        type.setGravity(Gravity.CENTER);
+        registration.setGravity(Gravity.CENTER);
+        callsign.setGravity(Gravity.CENTER);
+        flightTime.setGravity(Gravity.CENTER);
 
         date.setText("Date");
         type.setText("Type");
@@ -121,19 +131,22 @@ public class ViewLogbook extends AppCompatActivity {
         header.addView(callsign);
         header.addView(flightTime);
 
+
+
         tbLayout.addView(header);
 
-
-
-
     }
+
+
+
+
+
 
 
     protected void addRowView(String [] strArray){
         String data = "";
         tbLayout = (TableLayout) findViewById(R.id.ViewTable);
         //TV = (TextView) findViewById(R.id.sampleText);
-
         String [] fields;
         for(int i = 0; i<strArray.length; i++){
 
