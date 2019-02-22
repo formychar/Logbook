@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.text.DecimalFormat;
+
 public class Database extends SQLiteOpenHelper {
     final static String DBNAME = "logbook.db";
     final static String TBNAME = "logbook_tb";
@@ -66,4 +68,21 @@ public class Database extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TBNAME, "TYPE = ?",new String[] {"TEST"});
     }
+
+    public double getTotalTime(){
+        double totalTime = 0.0;
+        Cursor data;
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        data = db.rawQuery("SELECT SUM(Flight_Time) AS Total FROM "+TBNAME,null);
+
+        if(data.moveToFirst()){
+            DecimalFormat df = new DecimalFormat("#,##0.0");
+            totalTime = data.getDouble(data.getColumnIndex("Total"));
+            totalTime = Double.valueOf(df.format(totalTime)); // round to nearest tenth
+
+        }
+        return totalTime;
+    }
+
 }
